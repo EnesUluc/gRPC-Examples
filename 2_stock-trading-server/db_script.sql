@@ -1,0 +1,13 @@
+CREATE TABLE stocks (
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    stock_name VARCHAR(20) UNIQUE NOT NULL,
+    price DOUBLE PRECISION NOT NULL,
+    last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO stocks (stock_name, price) VALUES ('TABLE', 175.0);
+INSERT INTO stocks (stock_name, price) VALUES ('MOUSE', 10.5);
+INSERT INTO stocks (stock_name, price) VALUES ('LAPTOP', 1240.90);
+
+ALTER TABLE stocks
+    ADD COLUMN currency VARCHAR(3) NOT NULL DEFAULT 'USD';
