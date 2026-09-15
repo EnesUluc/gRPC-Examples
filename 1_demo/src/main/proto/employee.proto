@@ -1,0 +1,51 @@
+// Specifies the Protocol Buffers language version (proto3 is mandatory for gRPC)
+syntax = 'proto3';
+
+// Generator Options for Java
+option java_multiple_files = true;          // Generates separate .java files for each message and service
+option java_package = "com.enes";            // The target Java package for generated classes
+option java_outer_classname = "EmployeeProto"; // Outer wrapper class name for metadata
+
+// Imports
+import "google/protobuf/timestamp.proto";   // Standard Protocol Buffers Timestamp message type
+
+// Protobuf Namespace (Prevents type naming collisions)
+package com.enes;
+
+// Represents the primary Employee domain model
+message Employee {
+  int32 id = 1;                             // Unique ID (1 is the field tag used in binary wire format)
+  string name = 2;                          // Full name of the employee
+  double salary = 3;                        // Compensation amount
+  repeated Department department = 4;       // List of associated departments (equivalent to List<Department>)
+  map<string, string> addressMap = 5;       // Key-value store for addresses (e.g., "home" -> "address string")
+  bool isActive = 6;                        // Account status flag
+  bytes profilePicture = 7;                 // Raw binary data for image payload
+  google.protobuf.Timestamp joinDate = 8;   // UTC timestamp representing the hiring date
+}
+
+// Represents a Department entity
+message Department {
+  string id = 1;                            // Unique department identifier
+  string name = 2;                          // Department name
+}
+
+// Wrapper message for returning a list of employees
+message EmployeeList {
+  repeated Employee employees = 1;          // Collection of Employee messages
+}
+
+// Generic empty payload for request/response operations requiring no parameters
+message Empty {}
+
+// Defines the gRPC service interface and available RPC methods
+service EmployeeService {
+  // Fetches a single employee details (Unary RPC)
+  rpc getEmployee(Employee) returns (Employee);
+
+  // Creates/registers a new employee record (Unary RPC)
+  rpc addEmployee(Employee) returns (Employee);
+
+  // Retrieves all stored employee records (Unary RPC)
+  rpc getAllEmployees(Empty) returns (EmployeeList);
+}
