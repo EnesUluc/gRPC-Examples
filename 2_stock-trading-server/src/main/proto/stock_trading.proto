@@ -9,10 +9,15 @@ service StockTradingService{
   // Unary - RPC - get current stock price
   rpc getStockPrice(StockRequest) returns (StockResponse);
   rpc getAllStockPrice(Empty) returns(StockResponseList);
+  rpc updateStockPrice(StockUpdateRequest) returns(StockResponse);
 }
 
 message StockRequest{
   string stock_name = 1;
+}
+message StockUpdateRequest{
+  string stock_name = 1;
+  double price = 2;
 }
 message StockResponse{
   string stock_name = 1;

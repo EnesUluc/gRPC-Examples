@@ -42,6 +42,17 @@ public class StockTradingServiceImpl extends StockTradingServiceGrpc.StockTradin
         responseObserver.onCompleted();
     }
 
+    @Override
+    public void updateStockPrice(StockUpdateRequest request, StreamObserver<StockResponse> responseObserver) {
+        String stockName = request.getStockName();
+        Stock stock = stockRepository.findByStockName(stockName);
+        stock.setPrice(request.getPrice());
+        Stock updatedStock = stockRepository.save(stock);
+        responseObserver.onNext(toDto(updatedStock));
+        responseObserver.onCompleted();
+
+    }
+
     private StockResponse toDto(Stock stock) {
         return StockResponse.newBuilder()
                 .setStockName(stock.getStockName())
