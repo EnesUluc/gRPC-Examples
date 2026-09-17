@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: gRPC
+  datasource:
+    url: jdbc:postgresql://localhost:5435/grpc
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  grpc:
+    server:
+      port: 9090
+      reflection:
+        enabled: false
