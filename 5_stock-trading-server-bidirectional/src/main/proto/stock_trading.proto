@@ -1,0 +1,26 @@
+syntax = 'proto3';
+
+package stock_trading;
+option java_multiple_files=true;
+option java_package="com.gRPC";
+option java_outer_classname="StockTradingProto";
+
+
+service StockTradingService{
+  // Bidirectional streaming - live trading.
+  rpc liveTrading(stream StockOrder) returns (stream OrderStatus);
+}
+
+message StockOrder{
+  string stock_name = 1;
+  int32  quantity = 2;
+  string order_type = 3; // Sell or Buy
+}
+
+message OrderStatus {
+  string order_name = 1;
+  string status = 2; // execute, failed, pending
+  string message = 3; // reason if it is failed or success message
+  string timestamp = 4;
+  double totalAmount = 5;
+}

@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: client
+
+  grpc:
+    client:
+      channel:
+        stockService:
+          target: static://localhost:9090
